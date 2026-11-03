@@ -9,7 +9,7 @@ Built with Vite. Pushing to `main` publishes it to GitHub Pages.
 3. Open the **Actions** tab. If the first run failed because Pages wasn't switched on yet, choose **Re-run jobs**.
 4. The site appears at `https://YOUR-USERNAME.github.io/YOUR-REPO/`.
 
-This also works on Netlify or Vercel: the build command is `npm run build` and the output folder is `dist`. On those hosts, set `VITE_SITE_URL` to the full site address so WhatsApp can show the preview image.
+This also works on Netlify or Vercel: the build command is `npm run build` and the output folder is `dist`. On Vercel the preview image URL is filled in automatically from the production domain. On other hosts, set `VITE_SITE_URL` to the full site address so WhatsApp can show the preview image (`public/assets/og-invite.jpg`).
 
 ## Run it on your computer
 

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ritvik &amp; Vineesha</title>
+  <meta name="description" content="Ritvik and Vineesha are getting married in San Jose, California on December 16 and 17, 2026.">
+  <meta name="theme-color" content="#1C1B1A">
+  <meta property="og:title" content="Ritvik &amp; Vineesha are getting married">
+  <meta property="og:description" content="December 16 and 17, 2026, San Jose, California. Open your invitation.">
+  <meta property="og:image" content="%VITE_SITE_URL%/assets/og.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/assets/art/seal.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body data-scene="char">
+
+  <!-- Hand shape for the turmeric prints in the Haldi section -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="3" seed="4"/>
+        <feDisplacementMap in="SourceGraphic" scale="9"/>
+      </filter>
+      <symbol id="hand" viewBox="0 0 120 150">
+        <g filter="url(#rough)">
+          <ellipse cx="60" cy="100" rx="33" ry="38"/>
+          <rect x="26" y="36" width="15" height="58" rx="7.5" transform="rotate(-9 33 66)"/>
+          <rect x="44" y="20" width="15" height="72" rx="7.5" transform="rotate(-3 51 56)"/>
+          <rect x="62" y="22" width="15" height="70" rx="7.5" transform="rotate(3 69 56)"/>
+          <rect x="80" y="40" width="14" height="56" rx="7" transform="rotate(10 87 68)"/>
+          <rect x="94" y="78" width="15" height="48" rx="7.5" transform="rotate(38 101 102)"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <button class="sound" id="soundToggle" type="button" aria-pressed="true" aria-label="Sound on">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9.5v5h3.6L13 19V5L7.6 9.5H4z" fill="currentColor"/><path class="sound-wave" d="M15.8 8.6a4.8 4.8 0 0 1 0 6.8M18.2 6.2a8.2 8.2 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+
+  <a class="rsvp-seal" id="rsvpSeal" href="#rsvp" aria-label="Go to the RSVP card">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <defs><path id="sealRing" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1-78 0"/></defs>
+      <text><textPath href="#sealRing" textLength="240">RSVP &#183; RSVP &#183; RSVP &#183;</textPath></text>
+    </svg>
+    <img src="/assets/art/seal.webp" alt="" width="120" height="120">
+  </a>
+
+  <canvas class="petals" id="petals" aria-hidden="true"></canvas>
+
+  <main id="main">
+
+    <section class="opening" id="opening" data-scene="char" aria-label="Your invitation">
+      <div class="pin" id="pin">
+        <button class="sleeve" id="sleeve" type="button" aria-label="Open your invitation">
+          <span class="sleeve-back"></span>
+          <span class="strip" id="strip">
+            <span class="frame"><img src="/assets/photos/frame-1.webp" alt="Ritvik in a tuxedo and Vineesha in a black dress, smiling together"></span>
+            <span class="frame"><img src="/assets/photos/frame-2.webp" alt="Ritvik in a velvet sherwani and Vineesha in an embroidered dress"></span>
+            <span class="frame"><img src="/assets/photos/frame-3.webp" alt="Ritvik holding Vineesha's chin as she smiles up at him, both in traditional clothes"></span>
+            <span class="strip-foot">Save the Date<br><small>December 16 &amp; 17, 2026</small></span>
+            <span class="strip-tab" id="tab">Tap me</span>
+          </span>
+          <span class="sleeve-shade">
+            <span class="sleeve-front">
+              <span class="print-save">Save</span>
+              <span class="print-the">
+                <svg viewBox="0 0 300 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 42C28 30 54 30 78 38S120 54 141 45"/><path d="M186 44C204 54 226 52 244 42"/><path d="M262 42C238 25 247 9 262 20 277 9 286 25 262 42Z"/><path d="M262 42C272 46 288 44 298 39"/></g></svg>
+                <em class="script">the</em>
+              </span>
+              <span class="print-date">Date</span>
+            </span>
+            <span class="window-rim"></span>
+            <span class="pocket-shade"><span class="pocket-edge"></span><span class="pocket"></span></span>
+            <span class="notch-rim"></span>
+          </span>
+        </button>
+
+        <div class="rest-copy" id="restCopy">
+          <p class="sc rest-line">We Are Getting Married</p>
+          <p class="script rest-names">Ritvik &amp; Vineesha</p>
+          <p class="rest-to" id="envTo" hidden></p>
+        </div>
+
+        <button class="pill pill-ghost enter" id="enter" type="button">Enter Our Wedding</button>
+      </div>
+    </section>
+
+    <section class="hero" data-scene="red">
+      <button class="toran" id="toran" type="button" aria-label="Swing the garland"><img src="/assets/art/garland.webp" alt=""></button>
+      <div class="flatlay">
+
+        <div class="postcard" id="postcard" role="button" tabindex="0" aria-label="Turn the postcard over">
+          <div class="postcard-inner">
+            <div class="pc-face pc-back">
+              <button class="stamp" id="stamp" type="button" aria-label="Peel the stamp">
+                <img src="/assets/art/stamp.webp" alt="Engraved portrait of Ritvik and Vineesha">
+              </button>
+              <svg class="postmark" viewBox="0 0 150 80" aria-hidden="true">
+                <g fill="none" stroke="currentColor" stroke-width="1.3">
+                  <circle cx="42" cy="40" r="33"/><circle cx="42" cy="40" r="23"/>
+                  <path d="M80 26c10-6 18 6 28 0s18 6 28 0M80 40c10-6 18 6 28 0s18 6 28 0M80 54c10-6 18 6 28 0s18 6 28 0"/>
+                </g>
+                <text x="42" y="37" text-anchor="middle" font-size="8.5" fill="currentColor">DEC 16</text>
+                <text x="42" y="47" text-anchor="middle" font-size="8.5" fill="currentColor">2026</text>
+                <path id="pmArc" d="M15 40a27 27 0 0 1 54 0" fill="none"/>
+                <text font-size="7" fill="currentColor"><textPath href="#pmArc" startOffset="50%" text-anchor="middle">SAN JOSE CA</textPath></text>
+              </svg>
+              <p class="pc-names script">Ritvik &amp; Vineesha</p>
+              <p class="pc-line">are getting married</p>
+              <p class="pc-ps script" id="ps" hidden>P.S. You found it. You're our favorite.</p>
+            </div>
+            <div class="pc-face pc-front"><img src="/assets/art/postcard.webp" alt="Illustrated postcard reading Greetings from San Jose"></div>
+          </div>
+        </div>
+        <img class="bloom bloom-a" src="/assets/art/rose-3.webp" alt="">
+        <img class="bloom bloom-b" src="/assets/art/rose-5.webp" alt="">
+      </div>
+
+      <div class="hero-copy">
+        <h1 class="sr-only">Ritvik and Vineesha are getting married</h1>
+        <p class="sc lead">Meet us in</p>
+        <p class="script place">San Jose, California</p>
+        <a class="pill pill-ghost" id="mapLink" href="#" target="_blank" rel="noopener">View location</a>
+        <p class="sc when">Wednesday, December 16 and Thursday, December 17, 2026</p>
+        <p class="sc lead lead-count" id="countLabel">The wedding begins in</p>
+        <div class="countdown" id="countdown" role="timer" aria-label="Time until the wedding">
+          <span><b data-unit="d">00</b><small>days</small></span>
+          <i>:</i>
+          <span><b data-unit="h">00</b><small>hours</small></span>
+          <i>:</i>
+          <span><b data-unit="m">00</b><small>minutes</small></span>
+          <i>:</i>
+          <span><b data-unit="s">00</b><small>seconds</small></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="event event-haldi" id="haldi" data-scene="haldi">
+      <div class="tile"><img src="/assets/art/haldi.webp" alt="A brass bowl of turmeric paste with white roses" loading="lazy"></div>
+      <div class="event-copy">
+        <h2 class="script">Haldi</h2>
+        <p class="sc event-when">Wednesday, December 16<br>11 am to 2 pm</p>
+        <p class="event-note">Wear something you're happy to see turn yellow. Turmeric doesn't ask first.</p>
+        <a class="cal" href="assets/ics/haldi.ics" download>Add to calendar</a>
+        <p class="nudge">Tap anywhere here. It stains.</p>
+      </div>
+    </section>
+
+    <section class="event event-sangeeth" id="sangeeth" data-scene="sangeeth">
+      <div class="lights" id="lights" aria-hidden="true"></div>
+      <button class="tile tile-drum" id="dholak" type="button" aria-label="Play the dholak">
+        <img src="/assets/art/sangeeth.webp" alt="" loading="lazy">
+      </button>
+      <div class="event-copy">
+        <h2 class="script">Sangeeth</h2>
+        <p class="sc event-when">Wednesday, December 16<br>6 pm to 11 pm</p>
+        <p class="event-note">Bring your loudest clap and your second-best dance move. The best one goes on last.</p>
+        <a class="cal" href="assets/ics/sangeeth.ics" download>Add to calendar</a>
+        <p class="nudge">Tap the dholak. Left side is low, right side is high.</p>
+      </div>
+    </section>
+
+    <section class="event event-wedding" id="wedding" data-scene="wedding">
+      <button class="tile tile-mandap" id="mandap" type="button" aria-label="Shower petals">
+        <img src="/assets/art/wedding.webp" alt="" loading="lazy">
+      </button>
+      <div class="event-copy">
+        <h2 class="script">Wedding</h2>
+        <p class="sc event-when">Thursday, December 17<br>11 am to 4 pm</p>
+        <p class="event-note">The main event. Come hungry, and sit where you can see the good bit.</p>
+        <a class="cal" href="assets/ics/wedding.ics" download>Add to calendar</a>
+        <p class="nudge">Tap the mandap to shower the petals early.</p>
+      </div>
+    </section>
+
+    <section class="reel" data-scene="ink" aria-label="Photographs of Ritvik and Vineesha">
+      <div class="reel-head">
+        <h2 class="script">Us, so far</h2>
+        <p>Touch a photo to bring its color back.</p>
+      </div>
+      <div class="film" id="film" tabindex="0"></div>
+    </section>
+
+    <section class="rsvp" id="rsvp" data-scene="red">
+      <div class="reply" id="replyCard">
+        <form id="rsvpForm" novalidate>
+          <h2 class="script">Kindly reply</h2>
+          <p class="reply-sub" id="replyBy">Please reply as soon as you can.</p>
+
+          <label class="field">
+            <span>Your name, or your family's</span>
+            <input id="fName" name="name" type="text" maxlength="80" autocomplete="name" required>
+            <em class="err" id="errName" hidden>Add your name so we know who's coming.</em>
+          </label>
+
+          <fieldset class="attend">
+            <legend>Will you join us?</legend>
+            <div class="attend-row">
+              <span>Haldi</span>
+              <label><input type="radio" name="haldi" value="yes"><b>Yes</b></label>
+              <label><input type="radio" name="haldi" value="no"><b>No</b></label>
+            </div>
+            <div class="attend-row">
+              <span>Sangeeth</span>
+              <label><input type="radio" name="sangeeth" value="yes"><b>Yes</b></label>
+              <label><input type="radio" name="sangeeth" value="no"><b>No</b></label>
+            </div>
+            <div class="attend-row">
+              <span>Wedding</span>
+              <label><input type="radio" name="wedding" value="yes"><b>Yes</b></label>
+              <label><input type="radio" name="wedding" value="no"><b>No</b></label>
+            </div>
+            <em class="err" id="errAttend" hidden>Choose yes or no for each event.</em>
+          </fieldset>
+
+          <div class="field party" id="partyField">
+            <span id="partyLabel">How many in your party?</span>
+            <div class="stepper" role="group" aria-labelledby="partyLabel">
+              <button type="button" id="partyMinus" aria-label="One fewer">&minus;</button>
+              <output id="partyCount">1</output>
+              <button type="button" id="partyPlus" aria-label="One more">+</button>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>Phone or email, for the address and updates</span>
+            <input id="fContact" name="contact" type="text" maxlength="120" autocomplete="email">
+          </label>
+
+          <label class="field">
+            <span>A note for the two of us (optional)</span>
+            <textarea id="fNote" name="note" rows="2" maxlength="500"></textarea>
+          </label>
+
+          <label class="trap" aria-hidden="true">Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+
+          <button class="pill pill-solid" id="send" type="submit">Send my reply</button>
+          <p class="err err-send" id="errSend" role="alert" hidden></p>
+        </form>
+
+        <div class="thanks" id="thanks" tabindex="-1" hidden>
+          <div class="rubber" id="rubber" aria-hidden="true"></div>
+          <h2 class="script" id="thanksTitle">Thank you</h2>
+          <p id="thanksNote"></p>
+          <p class="err" id="notSent" hidden>RSVPs aren't connected yet, so this reply wasn't sent to Ritvik and Vineesha.</p>
+          <div class="gift" id="gift">
+            <p class="gift-line">One more thing, just for the people who reply.</p>
+            <img src="/assets/photos/portrait.webp" alt="Black and white portrait of Ritvik and Vineesha looking at each other" loading="lazy">
+          </div>
+          <button class="link" id="editReply" type="button">Change my reply</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" data-scene="red">
+      <h2 class="script">Before you ask</h2>
+      <details><summary>Will there be food?</summary><p>It's an Indian wedding. The real question is how much room you've saved.</p></details>
+      <details><summary>Does 11 am mean 11 am?</summary><p>Yes. We know what you're thinking. Still yes.</p></details>
+      <details><summary>I don't dance. Can I skip the Sangeeth?</summary><p>Nobody dances, until the third song.</p></details>
+      <details><summary>Can I bring someone?</summary><p>Put everyone in your party on your reply card, and we'll get in touch if we need to check anything.</p></details>
+      <details><summary>Where exactly is it?</summary><p>San Jose, California. We'll send the exact address to everyone who replies.</p></details>
+    </section>
+
+    <footer class="foot" data-scene="red">
+      <img src="/assets/art/engraving.webp" alt="Engraved portrait of Ritvik and Vineesha facing each other" loading="lazy">
+      <p class="script">Ritvik &amp; Vineesha</p>
+    </footer>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -18,25 +18,6 @@
 </head>
 <body data-scene="char">
 
-  <!-- Hand shape for the turmeric prints in the Haldi section -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-      <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="3" seed="4"/>
-        <feDisplacementMap in="SourceGraphic" scale="9"/>
-      </filter>
-      <symbol id="hand" viewBox="0 0 120 150">
-        <g filter="url(#rough)">
-          <ellipse cx="60" cy="100" rx="33" ry="38"/>
-          <rect x="26" y="36" width="15" height="58" rx="7.5" transform="rotate(-9 33 66)"/>
-          <rect x="44" y="20" width="15" height="72" rx="7.5" transform="rotate(-3 51 56)"/>
-          <rect x="62" y="22" width="15" height="70" rx="7.5" transform="rotate(3 69 56)"/>
-          <rect x="80" y="40" width="14" height="56" rx="7" transform="rotate(10 87 68)"/>
-          <rect x="94" y="78" width="15" height="48" rx="7.5" transform="rotate(38 101 102)"/>
-        </g>
-      </symbol>
-    </defs>
-  </svg>
 
   <button class="sound" id="soundToggle" type="button" aria-pressed="true" aria-label="Sound on">
     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9.5v5h3.6L13 19V5L7.6 9.5H4z" fill="currentColor"/><path class="sound-wave" d="M15.8 8.6a4.8 4.8 0 0 1 0 6.8M18.2 6.2a8.2 8.2 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -59,9 +40,9 @@
         <button class="sleeve" id="sleeve" type="button" aria-label="Open your invitation">
           <span class="sleeve-back"></span>
           <span class="strip" id="strip">
-            <span class="frame"><img src="/assets/photos/frame-1.webp" alt="Ritvik in a tuxedo and Vineesha in a black dress, smiling together"></span>
-            <span class="frame"><img src="/assets/photos/frame-2.webp" alt="Ritvik in a velvet sherwani and Vineesha in an embroidered dress"></span>
-            <span class="frame"><img src="/assets/photos/frame-3.webp" alt="Ritvik holding Vineesha's chin as she smiles up at him, both in traditional clothes"></span>
+            <span class="frame"><img src="/assets/photos/frame-1.webp" alt="Ritvik twirling Vineesha on a cliff above the ocean"></span>
+            <span class="frame"><img src="/assets/photos/frame-2.webp" alt="Ritvik and Vineesha forehead to forehead, smiling"></span>
+            <span class="frame"><img src="/assets/photos/frame-3.webp" alt="Ritvik and Vineesha holding each other at dusk"></span>
             <span class="strip-foot">Save the Date<br><small>December 16 &amp; 17, 2026</small></span>
             <span class="strip-tab" id="tab">Tap me</span>
           </span>
@@ -146,8 +127,9 @@
         <h2 class="script">Haldi</h2>
         <p class="sc event-when">Wednesday, December 16<br>11 am to 2 pm</p>
         <p class="event-note">Wear something you're happy to see turn yellow. Turmeric doesn't ask first.</p>
-        <a class="cal" href="assets/ics/haldi.ics" download>Add to calendar</a>
-        <p class="nudge">Tap anywhere here. It stains.</p>
+        <p class="dress"><span class="sc">Dress code</span>Yellows and whites. Comfortable, washable, nothing precious.</p>
+        <p class="venue">1615 Edgewood Dr<br>Palo Alto, CA 94303</p>
+        <a class="pill pill-ghost directions" href="https://maps.app.goo.gl/g2Dv9KRFpnZQqWik6" data-apple="https://maps.apple/p/D0wI7qi_o3eawn" target="_blank" rel="noopener">Get directions</a>
       </div>
     </section>
 
@@ -160,8 +142,10 @@
         <h2 class="script">Sangeeth</h2>
         <p class="sc event-when">Wednesday, December 16<br>6 pm to 11 pm</p>
         <p class="event-note">Bring your loudest clap and your second-best dance move. The best one goes on last.</p>
-        <a class="cal" href="assets/ics/sangeeth.ics" download>Add to calendar</a>
-        <p class="nudge">Tap the dholak. Left side is low, right side is high.</p>
+        <p class="dress"><span class="sc">Dress code</span>Festive and sparkly. Indo-western is welcome. Wear shoes you can dance in.</p>
+        <p class="venue"><b>Oasis Palace</b><br>35145 Newark Blvd<br>Newark, CA 94560</p>
+        <a class="pill pill-ghost directions" href="https://maps.app.goo.gl/d6yxo2qY2Y8Rh29z9" data-apple="https://maps.apple/p/5paIiTCGyuaEsC" target="_blank" rel="noopener">Get directions</a>
+        <p class="nudge">Tap the dholak to start the beat.</p>
       </div>
     </section>
 
@@ -173,7 +157,9 @@
         <h2 class="script">Wedding</h2>
         <p class="sc event-when">Thursday, December 17<br>11 am to 4 pm</p>
         <p class="event-note">The main event. Come hungry, and sit where you can see the good bit.</p>
-        <a class="cal" href="assets/ics/wedding.ics" download>Add to calendar</a>
+        <p class="dress"><span class="sc">Dress code</span>Traditional Indian. Sarees, lehengas, kurtas and sherwanis.</p>
+        <p class="venue"><b>Lavanda at Leal Vineyards</b><br>250 Maranatha Dr<br>Hollister, CA 95023</p>
+        <a class="pill pill-ghost directions" href="https://maps.app.goo.gl/T9F7sfJwEwGRXh1E6" data-apple="https://maps.apple/p/7w7gRW21EbQ2Jz" target="_blank" rel="noopener">Get directions</a>
         <p class="nudge">Tap the mandap to shower the petals early.</p>
       </div>
     </section>
@@ -181,7 +167,6 @@
     <section class="reel" data-scene="ink" aria-label="Photographs of Ritvik and Vineesha">
       <div class="reel-head">
         <h2 class="script">Us, so far</h2>
-        <p>Touch a photo to bring its color back.</p>
       </div>
       <div class="film" id="film" tabindex="0"></div>
     </section>
@@ -263,7 +248,7 @@
       <details><summary>Does 11 am mean 11 am?</summary><p>Yes. We know what you're thinking. Still yes.</p></details>
       <details><summary>I don't dance. Can I skip the Sangeeth?</summary><p>Nobody dances, until the third song.</p></details>
       <details><summary>Can I bring someone?</summary><p>Put everyone in your party on your reply card, and we'll get in touch if we need to check anything.</p></details>
-      <details><summary>Where exactly is it?</summary><p>San Jose, California. We'll send the exact address to everyone who replies.</p></details>
+      <details><summary>Where exactly is it?</summary><p>The Haldi is at a home in Palo Alto, the Sangeeth is at Oasis Palace in Newark, and the wedding is at Lavanda at Leal Vineyards in Hollister. Each event above has a Get directions button.</p></details>
     </section>
 
     <footer class="foot" data-scene="red">

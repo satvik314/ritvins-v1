@@ -162,25 +162,6 @@
   toggle.addEventListener("click", () => { Sound.toggle(); Sound.init(); paintToggle(); Sound.tick(); });
   paintToggle();
 
-  /* ---------- Color returns to a photo when touched ---------- */
-
-  function makeTouchable(el) {
-    el.tabIndex = 0;
-    el.setAttribute("role", "button");
-    el.setAttribute("aria-label", "Show this photo in color");
-    el.setAttribute("aria-pressed", "false");
-    const flip = () => {
-      const on = el.classList.toggle("is-color");
-      el.setAttribute("aria-pressed", String(on));
-      Sound.init();
-      Sound.tick();
-    };
-    el.addEventListener("click", flip);
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
-    });
-  }
-
   /* ---------- Hero: toran, map, postcard, stamp, countdown ---------- */
 
   const toran = $("toran");
@@ -238,39 +219,35 @@
   const timer = setInterval(tickCountdown, 1000);
   tickCountdown();
 
-  /* ---------- The page changes color with each event ---------- */
+  /* ---------- Colors ---------- */
 
-  const scenes = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) document.body.dataset.scene = entry.target.dataset.scene;
-      });
-    },
-    { rootMargin: "-48% 0px -48% 0px" }
-  );
-  document.querySelectorAll("main [data-scene]").forEach((section) => scenes.observe(section));
+  // Every section paints its own color, so its words always sit on the right one.
+  // The body follows the section under the top of the screen, which keeps the
+  // sound button and the phone's toolbar tint in step with what's behind them.
+  const sections = [...document.querySelectorAll("main > [data-scene]")];
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  let sceneQueued = false;
+  function paintScene() {
+    sceneQueued = false;
+    const probe = 30;
+    const here = sections.find((s) => s.getBoundingClientRect().bottom > probe) || sections[sections.length - 1];
+    if (document.body.dataset.scene !== here.dataset.scene) {
+      document.body.dataset.scene = here.dataset.scene;
+      themeColor.content = getComputedStyle(here).backgroundColor;
+    }
+  }
+  addEventListener("scroll", () => {
+    if (!sceneQueued) { sceneQueued = true; requestAnimationFrame(paintScene); }
+  }, { passive: true });
+  addEventListener("resize", paintScene);
+  paintScene();
 
-  /* ---------- Haldi: tapping leaves a turmeric handprint ---------- */
+  /* ---------- Directions: Apple Maps on iPhone and iPad, Google Maps everywhere else ---------- */
 
-  const haldi = $("haldi");
-  const stains = [];
-  haldi.addEventListener("click", (e) => {
-    if (e.target.closest("a")) return;
-    const box = haldi.getBoundingClientRect();
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "#hand");
-    svg.append(use);
-    svg.setAttribute("class", "stain");
-    svg.setAttribute("aria-hidden", "true");
-    svg.style.left = `${e.clientX - box.left}px`;
-    svg.style.top = `${e.clientY - box.top}px`;
-    svg.style.setProperty("--turn", `${Math.round(Math.random() * 70 - 35)}deg`);
-    haldi.append(svg);
-    stains.push(svg);
-    if (stains.length > 14) stains.shift().remove();
-    Sound.init();
-    Sound.thud();
+  const apple = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  document.querySelectorAll(".directions").forEach((link) => {
+    if (apple && link.dataset.apple) link.href = link.dataset.apple;
   });
 
   /* ---------- Sangeeth: the dholak and its string of lights ---------- */
@@ -284,16 +261,24 @@
     lights.append(bulb);
   }
   const dholak = $("dholak");
-  dholak.addEventListener("click", (e) => {
-    Sound.init();
-    const box = dholak.getBoundingClientRect();
-    const left = e.detail === 0 || e.clientX < box.left + box.width / 2;
-    if (left) Sound.dha(); else Sound.tin();
+  let grooveUntil = 0;
+  function pulse() {
     dholak.classList.remove("is-hit");
     lights.classList.remove("is-lit");
     void dholak.offsetWidth;
     dholak.classList.add("is-hit");
     lights.classList.add("is-lit");
+  }
+  dholak.addEventListener("click", () => {
+    Sound.init();
+    const now = performance.now();
+    if (now < grooveUntil) return;
+    const strokes = Sound.groove();
+    // With sound off the drum and the lights still keep the beat.
+    grooveUntil = now + strokes[strokes.length - 1].at * 1000 + 250;
+    strokes.forEach(({ at, accent }) => {
+      if (accent) setTimeout(pulse, at * 1000);
+    });
   });
 
   /* ---------- Wedding: petals, once on arrival and on request ---------- */
@@ -324,10 +309,9 @@
     frame.querySelector("img").alt = shot.alt;
     frame.querySelector("figcaption").textContent = shot.caption;
     film.append(frame);
-    makeTouchable(frame.querySelector(".shot-photo"));
   });
 
-  // Mouse users can drag the reel. A drag must not also count as a tap on a photo.
+  // Mouse users can drag the reel. A drag must not also count as a click.
   let dragFrom = null;
   let dragged = false;
   film.addEventListener("pointerdown", (e) => {

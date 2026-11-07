@@ -84,6 +84,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .pill:active { transform: scale(.97); }
 .pill-ghost { border: 1px solid currentColor; }
+.pill-pin { display: inline-flex; align-items: center; gap: .4em; padding-left: 1.2em; }
+.pill-pin svg { flex: none; margin-top: -.1em; }
 @media (hover: hover) {
   .pill-ghost:hover { background: var(--paper); color: var(--sindoor); }
 }
@@ -335,53 +337,52 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .hero {
   position: relative;
   display: flex; flex-direction: column; align-items: center;
-  padding: calc(min(112vw, 720px) * .3) 16px 72px;
+  padding: 64px 16px 72px;
   text-align: center;
   overflow: hidden;
 }
 
-.toran {
-  position: absolute;
-  top: -4px; left: 50%;
-  width: min(112vw, 720px);
-  margin-left: calc(min(112vw, 720px) / -2);
-  z-index: 3;
-  transform-origin: 50% 0;
-  filter: drop-shadow(0 8px 7px rgba(30, 0, 5, .45));
-}
-.toran img { width: 100%; height: auto; }
-.toran.is-swinging { animation: swing 1.7s ease-out; }
-@keyframes swing {
-  20% { transform: rotate(1.3deg); }
-  45% { transform: rotate(-1deg); }
-  70% { transform: rotate(.5deg); }
-}
-
-.bloom {
-  position: absolute;
-  z-index: 3;
-  pointer-events: none;
-  filter: drop-shadow(0 5px 5px rgba(30, 0, 5, .5));
-}
-.bloom-a { width: min(21vw, 92px); left: 0; bottom: 2%; transform: rotate(-16deg); }
-.bloom-b { width: min(15vw, 64px); left: 15%; bottom: -3%; transform: rotate(24deg); }
-
+/* The strip from the sleeve, now lying on the table beside the postcard.
+   Everything is sized from the table's width, so it scales as one picture. */
 .flatlay {
   position: relative;
-  width: min(100%, 560px);
-  height: min(72vw, 290px);
-  margin-bottom: 44px;
+  width: min(100%, 520px);
+  aspect-ratio: 1 / .9;
+  margin-bottom: 40px;
+  container-type: inline-size;
+}
+.table-strip {
+  position: absolute;
+  left: 3cqw; top: 2cqw;
+  width: 31cqw;
+  padding: 2.4cqw 2.4cqw 0;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.6cqw;
+  background-color: #f1efeb;
+  background-image: url("/assets/grain.png");
+  box-shadow: 0 18px 30px -12px rgba(20, 0, 3, .65);
+  transform: rotate(-7deg);
+}
+.table-strip .frame {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 560 / 533;
+  border-width: 1px;
+}
+.table-strip .strip-foot {
+  margin: 1.2cqw 0 2.6cqw;
+  font-size: 3.3cqw;
 }
 .postcard {
   position: absolute;
-  left: 50%; top: 0;
-  width: min(84vw, 400px);
-  margin-left: calc(min(84vw, 400px) / -2);
+  right: 1cqw; top: 22cqw;
+  width: 70cqw;
   aspect-ratio: 3 / 2;
   z-index: 2;
   cursor: pointer;
   perspective: 1200px;
-  transform: rotate(-2.5deg);
+  transform: rotate(4deg);
+  container-type: inline-size;
 }
 .postcard-inner {
   position: absolute; inset: 0;
@@ -408,8 +409,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .stamp {
   position: absolute;
   top: 6%; right: 4.5%;
-  width: 60px; height: 76px;
-  padding: 5px;
+  width: 15cqw; height: 19cqw;
+  padding: 1.25cqw;
   z-index: 3;
   background: radial-gradient(circle at center, transparent 2px, var(--paper) 2.4px) -4px -4px / 8px 8px;
   filter: drop-shadow(0 1px 1.5px rgba(30, 20, 18, .45));
@@ -431,18 +432,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pc-names {
   position: absolute; left: 5%; top: 38%;
   width: 46%;
-  font-size: clamp(34px, 10.4vw, 54px);
+  font-size: 13.5cqw;
   line-height: .86;
   color: var(--sindoor);
 }
 .pc-line {
   position: absolute; left: 55%; top: 46%;
-  font-size: clamp(13px, 3.4vw, 17px);
+  font-size: 4.25cqw;
   font-style: italic;
 }
 .pc-ps {
   position: absolute; left: 54%; right: 4%; top: 61%;
-  font-size: clamp(19px, 5.4vw, 27px);
+  font-size: 6.75cqw;
   line-height: .95;
   color: var(--sindoor);
 }

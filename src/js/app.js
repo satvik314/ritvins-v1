@@ -162,16 +162,7 @@
   toggle.addEventListener("click", () => { Sound.toggle(); Sound.init(); paintToggle(); Sound.tick(); });
   paintToggle();
 
-  /* ---------- Hero: toran, map, postcard, stamp, countdown ---------- */
-
-  const toran = $("toran");
-  toran.addEventListener("click", () => {
-    Sound.init();
-    Sound.chime();
-    toran.classList.remove("is-swinging");
-    void toran.offsetWidth;
-    toran.classList.add("is-swinging");
-  });
+  /* ---------- Hero: map, postcard, stamp, countdown ---------- */
 
   $("mapLink").href = SITE.mapUrl;
 

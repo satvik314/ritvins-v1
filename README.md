@@ -31,11 +31,10 @@ Add `?to=` to the link and the name appears on the invitation and in the reply c
 
 | What | Where |
 |---|---|
-| Map link, reply-by date, countdown time, reel captions | `src/js/config.js` |
-| Event text and FAQs | `index.html` |
+| Hero map link, reply-by date, countdown time, reel captions | `src/js/config.js` |
+| Event text, dress codes, venues, directions links and FAQs | `index.html` |
 | The thank-you line after replying | `src/js/notes.js` |
 | Photos and art | `public/assets/` |
-| Calendar files | `public/assets/ics/` |
 
 ## Connect Supabase later
 

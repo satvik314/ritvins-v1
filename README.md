@@ -32,7 +32,7 @@ Add `?to=` to the link and the name appears on the invitation and in the reply c
 | What | Where |
 |---|---|
 | Hero map link, reply-by date, countdown time, reel captions, Supabase project | `src/js/config.js` |
-| Event text, dress codes, venues, directions links and FAQs | `index.html` |
+| Event text, dress codes, venues and directions links | `index.html` |
 | The thank-you line after replying | `src/js/notes.js` |
 | Photos and art | `public/assets/` |
 
@@ -40,7 +40,9 @@ Add `?to=` to the link and the name appears on the invitation and in the reply c
 
 Replies are saved in the Supabase project **ritvik-vineesha-wedding** (organization "experiments", region us-west-1). The address and publishable key are set in `src/js/config.js`, so every build is connected with no extra setup.
 
-To read replies, open the project in the Supabase dashboard and go to **Table Editor**. Use `rsvps` for every reply. Use `latest_replies` to keep only the newest reply per name, since a guest who changes a reply adds a new row.
+The couple can see every reply at **`/admin`** on the site, for example `https://ritvik-weds-vineesha.vercel.app/admin`. It asks for a username and password, then shows the totals for each event, a searchable list, and a CSV download. The login is checked inside Supabase by the `admin_replies` function in `supabase/admin.sql`. Only a hash of the password is stored, and the password is not in this repository. To change it, run the snippet at the bottom of `supabase/admin.sql` in the Supabase SQL editor.
+
+You can also read replies in the Supabase dashboard under **Table Editor**. Use `rsvps` for every reply. Use `latest_replies` to keep only the newest reply per name, since a guest who changes a reply adds a new row.
 
 Guests can add a reply but can't read anyone's, including their own. `supabase/rsvps.sql` sets this up. It has already been applied to the project, so only run it again for a new project.
 

@@ -1,0 +1,135 @@
+:root {
+  --sindoor: #8e1220;
+  --kumkum: #5e0a15;
+  --paper: #fbf5e9;
+  --ink: #1e1412;
+  --line: rgba(30, 20, 18, .14);
+  --serif: "EB Garamond", Georgia, serif;
+  --script: "Mrs Saint Delafield", "Snell Roundhand", cursive;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100svh;
+  font: 400 1.0625rem/1.5 var(--serif);
+  font-variant-numeric: lining-nums;
+  color: var(--ink);
+  background: var(--sindoor) url("/assets/grain.png");
+}
+[hidden] { display: none !important; }
+h1, p { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+.script { font-family: var(--script); font-weight: 400; line-height: 1; }
+
+.card {
+  background: var(--paper) url("/assets/grain.png");
+  box-shadow: 0 24px 48px -18px rgba(20, 0, 3, .7);
+}
+
+.btn {
+  padding: .45em 1.3em .5em;
+  border: 1px solid var(--sindoor);
+  border-radius: 999px;
+  background: var(--sindoor);
+  color: var(--paper);
+  font-variant-caps: small-caps;
+  letter-spacing: .05em;
+  cursor: pointer;
+}
+.btn:disabled { opacity: .6; cursor: progress; }
+.btn.ghost { background: transparent; color: var(--paper); border-color: rgba(251, 245, 233, .6); }
+
+.sub { font-style: italic; opacity: .8; }
+.err { margin-top: .8em; color: #a00f1e; text-align: center; }
+
+/* ---------- Sign in ---------- */
+
+.login { min-height: 100svh; display: grid; place-items: center; padding: 24px 16px; }
+.login-card {
+  width: min(100%, 22rem);
+  padding: 32px 26px 30px;
+  text-align: center;
+  transform: rotate(-.6deg);
+}
+.login-card img { margin: 0 auto 6px; filter: drop-shadow(0 2px 2px rgba(40, 0, 6, .4)); }
+.login-card h1 { font-size: 72px; color: var(--sindoor); }
+.login-card .sub { margin-bottom: 1.2em; }
+.field { display: block; margin-bottom: 1em; text-align: left; }
+.field span { display: block; font-size: .95rem; }
+.field input {
+  width: 100%;
+  padding: .35em .1em;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+}
+.field input:focus { outline: none; border-bottom: 2px solid var(--sindoor); }
+.login-card .btn { width: 100%; margin-top: .4em; }
+
+/* ---------- Replies ---------- */
+
+.dash { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; color: var(--paper); }
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 20px; }
+.top h1 { font-size: 76px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+.stat {
+  padding: 14px 16px 12px;
+  background: var(--paper) url("/assets/grain.png");
+  color: var(--ink);
+  box-shadow: 0 10px 22px -12px rgba(20, 0, 3, .7);
+}
+.stat b { display: block; font-size: 2.4rem; font-weight: 400; line-height: 1; color: var(--sindoor); font-variant-numeric: tabular-nums lining-nums; }
+.stat span { font-size: .95rem; }
+.hint { margin-top: 10px; font-size: .92rem; font-style: italic; opacity: .85; }
+
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 24px 0 12px; }
+.tools input[type="search"], .tools select {
+  padding: .4em .8em;
+  border: 1px solid rgba(251, 245, 233, .5);
+  border-radius: 999px;
+  background: rgba(20, 0, 3, .25);
+  color: var(--paper);
+}
+.tools input[type="search"] { flex: 1 1 220px; }
+.tools input::placeholder { color: rgba(251, 245, 233, .65); }
+.tools select option { color: var(--ink); }
+.check { display: inline-flex; align-items: center; gap: .4em; cursor: pointer; }
+
+.table-wrap {
+  background: var(--paper) url("/assets/grain.png");
+  color: var(--ink);
+  box-shadow: 0 24px 48px -18px rgba(20, 0, 3, .7);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: .6em .8em; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; font-variant-caps: small-caps; letter-spacing: .04em; white-space: nowrap; }
+td.yes { color: var(--sindoor); font-weight: 600; }
+td.no { opacity: .55; }
+td[data-label="Note"] { min-width: 14em; font-style: italic; }
+td[data-label="Replied"] { white-space: nowrap; font-size: .92rem; }
+tr.old { opacity: .5; }
+.empty { padding: 28px 16px; text-align: center; font-style: italic; }
+
+/* On phones each reply becomes a small card. */
+@media (max-width: 720px) {
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tr { padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  td { display: flex; gap: 12px; padding: .15em 0; border: 0; }
+  td::before { content: attr(data-label); flex: 0 0 5.5em; font-variant-caps: small-caps; opacity: .7; }
+  td[data-label="Name"] { font-size: 1.2rem; font-weight: 500; }
+  td[data-label="Name"]::before { display: none; }
+  td:empty { display: none; }
+  td[data-label="Note"] { min-width: 0; }
+}

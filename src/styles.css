@@ -488,8 +488,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   position: relative;
   z-index: 1;
   display: block;
-  width: min(72vw, 300px);
-  aspect-ratio: 4 / 5;
   border: var(--edge) solid var(--paper);
   transform: rotate(-1.6deg);
   box-shadow: 0 18px 34px -14px rgba(20, 0, 3, .6);
@@ -498,24 +496,21 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .event-sangeeth .tile { transform: rotate(1.4deg); box-shadow: 0 18px 34px -14px rgba(0, 0, 0, .8); }
 .tile img { width: 100%; height: 100%; object-fit: cover; }
-.tile .art-full { display: none; }
-.event { --edge: clamp(5px, 1.6vw, 8px); --card: min(90vw, 440px, calc(48svh * 560 / 1133 * 2)); }
+.event { --edge: clamp(5px, 1.6vw, 8px); --card: min(94vw, 520px, 60svh); }
 
-/* "On picture": the whole illustration, with its painted title, and the
-   details laid over the bottom of it on a fade of the event's color. */
-body[data-layout="overlay"] .event {
+/* Each event is one card: the full illustration with its painted title,
+   and the details laid over the bottom of it on a fade of the event's color. */
+.event {
   display: grid;
   justify-items: center;
   align-content: center;
   gap: 0;
   text-align: center;
 }
-body[data-layout="overlay"] .event > :not(.lights) { grid-area: 1 / 1; }
-body[data-layout="overlay"] .tile { width: var(--card); aspect-ratio: auto; transform: none; }
-body[data-layout="overlay"] .tile img { height: auto; }
-body[data-layout="overlay"] .tile .art-crop { display: none; }
-body[data-layout="overlay"] .tile .art-full { display: block; }
-body[data-layout="overlay"] .event-copy {
+.event > :not(.lights) { grid-area: 1 / 1; }
+.event .tile { width: var(--card); aspect-ratio: auto; transform: none; }
+.event .tile img { height: auto; }
+.event .event-copy {
   align-self: end;
   z-index: 2;
   width: calc(var(--card) - 2 * var(--edge));
@@ -525,33 +520,13 @@ body[data-layout="overlay"] .event-copy {
   background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 82%, transparent) 3em, var(--bg) 5.2em);
   pointer-events: none;
 }
-body[data-layout="overlay"] .event-copy a { pointer-events: auto; }
-body[data-layout="overlay"] .event h2 {
+.event .event-copy a { pointer-events: auto; }
+/* The painted title on the picture is the heading people see. */
+.event h2 {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip-path: inset(50%); white-space: nowrap;
 }
-body[data-layout="overlay"] .event-note { display: none; }
-
-.layout-toggle {
-  position: fixed;
-  top: max(12px, env(safe-area-inset-top)); left: 12px;
-  z-index: 40;
-  display: flex;
-  padding: 3px;
-  border-radius: 999px;
-  background: rgba(15, 8, 8, .62);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  font-size: .8rem;
-}
-.layout-toggle button {
-  padding: .35em .9em .4em;
-  border-radius: 999px;
-  color: #efe6d6;
-  font-variant-caps: small-caps;
-  letter-spacing: .04em;
-}
-.layout-toggle button[aria-pressed="true"] { background: var(--paper); color: var(--sindoor); }
+.event .event-note { display: none; }
 
 .event-copy { position: relative; z-index: 1; max-width: 26em; }
 .event h2 { font-size: clamp(96px, 27vw, 170px); margin-bottom: .04em; }
@@ -571,7 +546,6 @@ body[data-layout="overlay"] .event-note { display: none; }
 @media (hover: hover) {
   .event-haldi .directions:hover { background: var(--ink); color: var(--haldi); }
 }
-.nudge { margin-top: .9em; font-style: italic; font-size: 1rem; opacity: .8; }
 
 .lights { position: absolute; left: 4%; right: 4%; top: 18px; height: 50px; }
 .lights i {
@@ -772,11 +746,6 @@ body[data-layout="overlay"] .event-note { display: none; }
 /* ---------- Wider screens ---------- */
 
 @media (min-width: 900px) {
-  .event { flex-direction: row; gap: clamp(48px, 8vw, 120px); text-align: left; }
-  .event-sangeeth { flex-direction: row-reverse; }
-  .event-copy { width: 26em; }
-  .tile { width: min(28vw, 340px, 60svh); }
-  .event h2 { margin-left: -.06em; }
   .film {
     padding-left: max(32px, calc(50vw - 640px));
     padding-right: max(32px, calc(50vw - 640px));

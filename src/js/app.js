@@ -233,24 +233,6 @@
   addEventListener("resize", paintScene);
   paintScene();
 
-  /* ---------- Preview toggle for the event pictures (remove once one is chosen) ---------- */
-
-  const layouts = ["crop", "overlay"];
-  function setLayout(name, save) {
-    if (!layouts.includes(name)) name = "crop";
-    document.body.dataset.layout = name;
-    document.querySelectorAll(".layout-toggle button").forEach((b) => {
-      b.setAttribute("aria-pressed", String(b.dataset.layout === name));
-    });
-    if (save) try { localStorage.setItem("layout", name); } catch (e) {}
-  }
-  let savedLayout = new URLSearchParams(location.search).get("layout");
-  if (!savedLayout) try { savedLayout = localStorage.getItem("layout"); } catch (e) {}
-  setLayout(savedLayout, false);
-  document.querySelectorAll(".layout-toggle button").forEach((b) => {
-    b.addEventListener("click", () => { Sound.init(); Sound.tick(); setLayout(b.dataset.layout, true); });
-  });
-
   /* ---------- Directions: Apple Maps on iPhone and iPad, Google Maps everywhere else ---------- */
 
   const apple = /iPhone|iPad|iPod/.test(navigator.userAgent) ||

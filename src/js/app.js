@@ -288,53 +288,77 @@
   ).observe($("wedding"));
   $("mandap").addEventListener("click", () => { Sound.init(); Sound.paper(); Petals.rain(30); });
 
-  /* ---------- The film reel ---------- */
+  /* ---------- Us, so far: prints that drift past on their own ---------- */
 
   const film = $("film");
-  SITE.reel.forEach((shot) => {
-    const frame = document.createElement("figure");
-    frame.className = "shot";
-    frame.innerHTML = `
-      <div class="shot-photo"><img src="assets/photos/${shot.src}.webp" width="880" height="1100" loading="lazy"></div>
-      <figcaption></figcaption>`;
-    frame.querySelector("img").alt = shot.alt;
-    frame.querySelector("figcaption").textContent = shot.caption;
-    film.append(frame);
-  });
+  // Three copies of the set, so the row can loop without a visible seam.
+  // Only the first copy is read out by screen readers.
+  for (let copy = 0; copy < 3; copy++) {
+    SITE.reel.forEach((shot) => {
+      const print = document.createElement("figure");
+      print.className = "print";
+      print.style.setProperty("--ratio", `${shot.w} / ${shot.h}`);
+      print.innerHTML = `<div class="print-photo"><img loading="lazy" draggable="false"></div><figcaption></figcaption>`;
+      const img = print.querySelector("img");
+      img.src = `assets/photos/${shot.src}.webp`;
+      img.width = shot.w * 240;
+      img.height = shot.h * 240;
+      img.alt = copy ? "" : shot.alt;
+      print.querySelector("figcaption").textContent = shot.caption;
+      if (copy) print.setAttribute("aria-hidden", "true");
+      film.append(print);
+    });
+  }
+  const setWidth = () => film.children[SITE.reel.length].offsetLeft - film.children[0].offsetLeft;
 
-  // Mouse users can drag the reel. A drag must not also count as a click.
+  // It runs on its own, pauses while someone swipes, drags or hovers,
+  // and carries on from wherever they left it.
+  const SPEED = 26; // pixels a second
+  let pos = 0;
+  let last = 0;
+  let restAt = 0;
+  let hovering = false;
+  let running = 0;
+  const hold = (ms = 2600) => { restAt = performance.now() + ms; };
+
+  function drift(now) {
+    running = requestAnimationFrame(drift);
+    const dt = last ? Math.min(now - last, 64) : 0;
+    last = now;
+    if (hovering || dragFrom || now < restAt) { pos = film.scrollLeft; return; }
+    const loop = setWidth();
+    pos += (SPEED * dt) / 1000;
+    if (loop > 0 && pos >= loop) pos -= loop;
+    film.scrollLeft = pos;
+  }
+  function startDrift() { if (!running && !still) { last = 0; pos = film.scrollLeft; running = requestAnimationFrame(drift); } }
+  function stopDrift() { cancelAnimationFrame(running); running = 0; }
+  new IntersectionObserver((entries) => (entries[0].isIntersecting ? startDrift() : stopDrift())).observe(film);
+
+  ["touchstart", "wheel", "keydown"].forEach((type) => film.addEventListener(type, () => hold(), { passive: true }));
+  film.addEventListener("touchend", () => hold(), { passive: true });
+  film.addEventListener("focus", () => hold(4000));
+  film.addEventListener("mouseenter", () => { hovering = true; });
+  film.addEventListener("mouseleave", () => { hovering = false; hold(600); });
+
+  // Mouse users can drag the row.
   let dragFrom = null;
-  let dragged = false;
   film.addEventListener("pointerdown", (e) => {
     if (e.pointerType !== "mouse") return;
     dragFrom = { x: e.clientX, left: film.scrollLeft };
-    dragged = false;
   });
   addEventListener("pointermove", (e) => {
     if (!dragFrom) return;
     const moved = e.clientX - dragFrom.x;
-    if (Math.abs(moved) > 5) { dragged = true; film.classList.add("is-dragging"); }
-    if (dragged) film.scrollLeft = dragFrom.left - moved;
+    if (Math.abs(moved) > 4) film.classList.add("is-dragging");
+    film.scrollLeft = dragFrom.left - moved;
   });
-  addEventListener("pointerup", () => { dragFrom = null; film.classList.remove("is-dragging"); });
-  film.addEventListener("click", (e) => {
-    if (dragged) { e.stopPropagation(); dragged = false; }
-  }, true);
+  addEventListener("pointerup", () => {
+    if (dragFrom) hold(1200);
+    dragFrom = null;
+    film.classList.remove("is-dragging");
+  });
   film.addEventListener("dragstart", (e) => e.preventDefault());
-
-  // A soft tick each time a new frame settles in the middle.
-  let lastShot = 0;
-  const snap = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const index = [...film.children].indexOf(entry.target);
-        if (index !== lastShot) { lastShot = index; Sound.tick(); }
-      });
-    },
-    { root: film, rootMargin: "0px -49% 0px -49%" }
-  );
-  [...film.children].forEach((shot) => snap.observe(shot));
 
   /* ---------- The reply card ---------- */
 

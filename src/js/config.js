@@ -10,12 +10,13 @@ window.SITE = {
   // Leave empty to show "Please reply as soon as you can."
   replyBy: "",
 
-  // Where replies are stored. Set these in .env or as GitHub repository
-  // variables (see the README). While the url is empty the site runs in
-  // preview mode: replies stay in this browser and nothing reaches the couple.
+  // Where replies are stored: the "ritvik-vineesha-wedding" Supabase project.
+  // The publishable key is meant to be public. Row level security lets guests
+  // add a reply but never read one (see supabase/rsvps.sql). VITE_SUPABASE_URL
+  // and VITE_SUPABASE_ANON_KEY override these, for example to test elsewhere.
   rsvp: {
-    url: import.meta.env.VITE_SUPABASE_URL || "",
-    anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || "",
+    url: import.meta.env.VITE_SUPABASE_URL || "https://zsqalbgdmrcuuviicinm.supabase.co",
+    anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || "sb_publishable_tx1x3byQsLZ57xgD9xFbrA_Myb73js-",
   },
 
   reel: [

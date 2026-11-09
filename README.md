@@ -31,17 +31,17 @@ Add `?to=` to the link and the name appears on the invitation and in the reply c
 
 | What | Where |
 |---|---|
-| Hero map link, reply-by date, countdown time, reel captions | `src/js/config.js` |
+| Hero map link, reply-by date, countdown time, reel captions, Supabase project | `src/js/config.js` |
 | Event text, dress codes, venues, directions links and FAQs | `index.html` |
 | The thank-you line after replying | `src/js/notes.js` |
 | Photos and art | `public/assets/` |
 
-## Connect Supabase later
+## Where replies go
 
-Until this is done, replies stay in the guest's own browser and never reach the couple. The thank-you card tells guests their reply wasn't sent, and that message goes away once Supabase is connected.
+Replies are saved in the Supabase project **ritvik-vineesha-wedding** (organization "experiments", region us-west-1). The address and publishable key are set in `src/js/config.js`, so every build is connected with no extra setup.
 
-1. Create a Supabase project and run `supabase/rsvps.sql` in its SQL editor.
-2. In the GitHub repository, open **Settings > Secrets and variables > Actions > Variables**.
-3. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then re-run the deploy.
+To read replies, open the project in the Supabase dashboard and go to **Table Editor**. Use `rsvps` for every reply. Use `latest_replies` to keep only the newest reply per name, since a guest who changes a reply adds a new row.
 
-For local development, copy `.env.example` to `.env` and fill in the same two values.
+Guests can add a reply but can't read anyone's, including their own. `supabase/rsvps.sql` sets this up. It has already been applied to the project, so only run it again for a new project.
+
+To point a build at a different project, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env` or in the host's environment variables.

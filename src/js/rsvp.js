@@ -8,14 +8,18 @@ window.sendReply = async function (reply) {
     return;
   }
 
+  const headers = {
+    apikey: anonKey,
+    "Content-Type": "application/json",
+    Prefer: "return=minimal",
+  };
+  // Older anon keys are JWTs and also go in Authorization. The newer
+  // sb_publishable_ keys are not JWTs, so they go in apikey only.
+  if (anonKey.startsWith("eyJ")) headers.Authorization = `Bearer ${anonKey}`;
+
   const response = await fetch(`${url}/rest/v1/rsvps`, {
     method: "POST",
-    headers: {
-      apikey: anonKey,
-      Authorization: `Bearer ${anonKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
+    headers,
     body: JSON.stringify({
       name: reply.name,
       haldi: reply.haldi === "yes",

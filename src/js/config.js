@@ -19,15 +19,12 @@ window.SITE = {
     anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY || "sb_publishable_tx1x3byQsLZ57xgD9xFbrA_Myb73js-",
   },
 
+  // "Us, so far": the photos drift past on their own. w and h are each photo's shape.
   reel: [
-    { src: "reel-9", caption: "Brunch, then forever.", alt: "Ritvik and Vineesha outside a cafe under pink bougainvillea" },
-    { src: "reel-7", caption: "The city can wait.", alt: "Ritvik and Vineesha on a boat with a city skyline behind them" },
-    { src: "reel-4", caption: "Snow and sand in one photo.", alt: "Ritvik and Vineesha on a picnic bench with snow and pine trees behind them" },
-    { src: "reel-6", caption: "Arm's length is as far apart as we get.", alt: "Ritvik and Vineesha taking a selfie by an ivy wall" },
-    { src: "reel-5", caption: "High above the city, still looking at the camera.", alt: "Ritvik and Vineesha at a window high above a city at night" },
-    { src: "reel-8", caption: "Going up.", alt: "Ritvik and Vineesha taking a mirror selfie in an elevator" },
-    { src: "reel-3", caption: "Table for two, as usual.", alt: "Ritvik and Vineesha smiling at a cafe table" },
-    { src: "reel-2", caption: "Tree included at no extra charge.", alt: "Ritvik and Vineesha on a granite overlook beside a pine tree" },
-    { src: "reel-1", caption: "The one where we hired a photographer.", alt: "Ritvik and Vineesha facing each other among green trees" },
+    { src: "moment-1", w: 3, h: 4, caption: "A whole city lit up. He looked at her anyway.", alt: "Ritvik with his arm around Vineesha at a window high above a city at night" },
+    { src: "moment-3", w: 4, h: 3, caption: "Walking off into the sunset. Literally.", alt: "Silhouette of Ritvik and Vineesha holding hands beside a large tree at dusk" },
+    { src: "moment-2", w: 3, h: 4, caption: "Brunch, then forever.", alt: "Ritvik and Vineesha outside a cafe under pink bougainvillea" },
+    { src: "moment-4", w: 4, h: 3, caption: "Golden hour, and neither of us letting go.", alt: "Ritvik smiling as Vineesha hugs him, both in white, against a golden hillside" },
+    { src: "moment-5", w: 4, h: 3, caption: "Arm's length is as far apart as we get.", alt: "Selfie of Vineesha in a gold blouse and Ritvik in a lavender shirt" },
   ],
 };

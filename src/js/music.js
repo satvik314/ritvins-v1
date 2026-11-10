@@ -1,5 +1,5 @@
 // Optional locally hosted soundtrack. This site's authorized audio is served from public/assets/music.mp3.
-// The existing speaker icon controls BOTH the soundtrack and page sound effects.
+// The existing speaker icon controls the MP3 soundtrack; other audio is disabled.
 // Browsers prevent audible autoplay before a visitor's first interaction.
 (function () {
   const source = "/assets/music.mp3";
@@ -14,7 +14,7 @@
   let unlocked = false;
 
   audio.addEventListener("error", () => {
-    unavailable = true; // Music file not installed yet, keep the sound-effects control working.
+    unavailable = true; // Do not attempt playback if the MP3 cannot load.
   });
 
   function play() {

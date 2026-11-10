@@ -159,7 +159,7 @@
     toggle.setAttribute("aria-label", Sound.enabled ? "Sound on" : "Sound off");
     toggle.classList.toggle("is-off", !Sound.enabled);
   }
-  toggle.addEventListener("click", () => { Sound.toggle(); Sound.init(); paintToggle(); Sound.tick(); });
+  toggle.addEventListener("click", () => { Sound.toggle(); Sound.init(); paintToggle(); if (window.WeddingMusic) window.WeddingMusic.setEnabled(Sound.enabled); Sound.tick(); });
   paintToggle();
 
   /* ---------- Hero: map, postcard, stamp, countdown ---------- */

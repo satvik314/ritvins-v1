@@ -291,30 +291,26 @@
   /* ---------- Us, so far: prints that drift past on their own ---------- */
 
   const film = $("film");
-  // Three copies of the set, so the row can loop without a visible seam.
-  // Only the first copy is read out by screen readers.
-  for (let copy = 0; copy < 3; copy++) {
-    SITE.reel.forEach((shot) => {
-      const print = document.createElement("figure");
-      print.className = "print";
-      print.style.setProperty("--ratio", `${shot.w} / ${shot.h}`);
-      print.innerHTML = `<div class="print-photo"><img loading="lazy" draggable="false"></div><figcaption></figcaption>`;
-      const img = print.querySelector("img");
-      img.src = `assets/photos/${shot.src}.webp`;
-      img.width = shot.w * 240;
-      img.height = shot.h * 240;
-      img.alt = copy ? "" : shot.alt;
-      print.querySelector("figcaption").textContent = shot.caption;
-      if (copy) print.setAttribute("aria-hidden", "true");
-      film.append(print);
-    });
-  }
-  const setWidth = () => film.children[SITE.reel.length].offsetLeft - film.children[0].offsetLeft;
+  // One set only: no visibly repeated photographs.
+  SITE.reel.forEach((shot) => {
+    const print = document.createElement("figure");
+    print.className = "print";
+    print.style.setProperty("--ratio", String(shot.w / shot.h));
+    print.innerHTML = '<div class="print-photo"><img loading="lazy" draggable="false"></div><figcaption></figcaption>';
+    const img = print.querySelector("img");
+    img.src = `/assets/photos/${shot.src}.webp`;
+    img.width = shot.w * 240;
+    img.height = shot.h * 240;
+    img.alt = shot.alt;
+    print.querySelector("figcaption").textContent = shot.caption;
+    film.append(print);
+  });
 
   // It runs on its own, pauses while someone swipes, drags or hovers,
   // and carries on from wherever they left it.
   const SPEED = 26; // pixels a second
   let pos = 0;
+  let direction = 1;
   let last = 0;
   let restAt = 0;
   let hovering = false;
@@ -326,9 +322,11 @@
     const dt = last ? Math.min(now - last, 64) : 0;
     last = now;
     if (hovering || dragFrom || now < restAt) { pos = film.scrollLeft; return; }
-    const loop = setWidth();
-    pos += (SPEED * dt) / 1000;
-    if (loop > 0 && pos >= loop) pos -= loop;
+    const maxScroll = Math.max(0, film.scrollWidth - film.clientWidth);
+    if (maxScroll < 1) return;
+    pos += (direction * SPEED * dt) / 1000;
+    if (pos >= maxScroll) { pos = maxScroll; direction = -1; hold(1400); }
+    if (pos <= 0) { pos = 0; direction = 1; hold(1400); }
     film.scrollLeft = pos;
   }
   function startDrift() { if (!running && !still) { last = 0; pos = film.scrollLeft; running = requestAnimationFrame(drift); } }

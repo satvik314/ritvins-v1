@@ -485,8 +485,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .event .event-card {
   position: relative;
   isolation: isolate;
-  width: min(92vw, 480px);
-  aspect-ratio: 1;
+  width: min(94vw, 530px);
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border: clamp(5px, 1.3vw, 7px) solid var(--paper);
   border-radius: 4px;
@@ -494,7 +494,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   color: #fff5e8;
   box-shadow: 0 20px 35px -16px rgba(12, 5, 8, .65);
 }
-/* Keep the original photo and live text in the SAME square. */
+/* One taller event card: room for faces, heading, and details. */
 .event .tile {
   position: absolute;
   inset: 0;
@@ -518,9 +518,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   max-width: none;
   object-fit: cover;
   /* Crop out title banners at the top of the uploaded portraits. */
-  object-position: 50% 67%;
-  transform: scale(1.05);
-  transform-origin: 50% 67%;
+  object-position: 50% 100%;
+  transform: none;
 }
 .event-sangeeth .tile { box-shadow: none; }
 .event .event-copy {
@@ -536,21 +535,27 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   pointer-events: none;
 }
 .event .event-copy a { pointer-events: auto; }
-.event h2 {
-  position: static;
-  overflow: visible;
-  width: auto;
-  height: auto;
-  clip-path: none;
-  white-space: normal;
-  font-family: var(--serif);
-  font-size: clamp(18px, 4.6vw, 28px);
-  font-variant-caps: small-caps;
-  font-weight: 500;
-  letter-spacing: .11em;
+.event .event-card > h2 {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0;
+  padding: 20px 10px 36px;
+  font-family: var(--script);
+  font-size: clamp(62px, 14vw, 100px);
+  font-weight: 400;
   line-height: 1;
-  margin: 0 0 .28em;
+  letter-spacing: 0;
+  text-align: center;
+  color: #fff5e7;
+  background: linear-gradient(to bottom, rgba(18, 8, 13, .78), rgba(18, 8, 13, .35) 60%, transparent);
+  text-shadow: 0 2px 5px rgba(0,0,0,.5);
+  pointer-events: none;
 }
+
 .event-when {
   font-size: clamp(.83rem, 2.5vw, 1.12rem);
   line-height: 1.16;
@@ -601,9 +606,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .tile-drum.is-hit { animation: hit .24s ease-out; }
 @keyframes hit { 30% { transform: scale(.975); } }
 @media (max-width: 390px) {
-  .event .event-card { width: min(96vw, 480px); }
+  .event .event-card { width: min(96vw, 530px); }
   .event .event-copy { padding: 28px 9px 9px; }
-  .event h2 { font-size: 17px; margin-bottom: .16em; }
+  .event .event-card > h2 { font-size: 64px; padding-top: 12px; }
   .event-when { font-size: .79rem; }
   .dress, .venue { font-size: .73rem; margin-top: .35em; }
   .directions { margin-top: .44em; font-size: .77rem; padding: .22em .9em; }

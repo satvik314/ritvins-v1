@@ -472,113 +472,42 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .countdown small { font-size: 1rem; font-style: italic; margin-top: -.1em; opacity: .85; }
 .countdown i { font-style: normal; opacity: .6; }
 
-/* ---------- One square invitation per event: details above, portrait below ---------- */
-
+/* ---------- Compact event postcard: cropped photo and blended details ---------- */
 .event {
   position: relative;
+  padding: clamp(54px, 8vw, 94px) 12px;
   min-height: 0;
-  padding: clamp(56px, 10vw, 100px) 12px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   overflow: hidden;
 }
-
-/* Keep the details and portrait together as a single square artwork card.
-   On narrow screens, a contained square still preserves readable event facts. */
 .event .event-card {
   position: relative;
-  z-index: 1;
-  width: min(96vw, 660px);
-  aspect-ratio: 1 / 1;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1.03fr);
-  justify-items: stretch;
-  align-items: stretch;
+  isolation: isolate;
+  width: min(92vw, 480px);
+  aspect-ratio: 1;
   overflow: hidden;
-  border: clamp(5px, 1.4vw, 8px) solid var(--paper);
-  border-radius: 3px;
-  background: var(--bg);
-  box-shadow: 0 18px 34px -14px rgba(20, 0, 3, .65);
+  border: clamp(5px, 1.3vw, 7px) solid var(--paper);
+  border-radius: 4px;
+  background: #22181b;
+  color: #fff5e8;
+  box-shadow: 0 20px 35px -16px rgba(12, 5, 8, .65);
 }
-.event .event-copy {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: clamp(10px, 2.7vw, 26px) clamp(8px, 3vw, 32px);
-  overflow: hidden;
-  z-index: 2;
-}
-.event h2 {
-  position: static;
-  width: auto;
-  height: auto;
-  overflow: visible;
-  clip-path: none;
-  white-space: normal;
-  font-size: clamp(43px, 12vw, 93px);
-  line-height: .93;
-  margin: 0 0 .11em;
-}
-.event-when {
-  font-size: clamp(.84rem, 2.6vw, 1.38rem);
-  line-height: 1.18;
-}
-.event-note { display: none; }
-.dress {
-  font-size: clamp(.77rem, 2.3vw, 1.05rem);
-  line-height: 1.18;
-  margin-top: .38em;
-  font-style: italic;
-}
-.dress .sc {
-  display: block;
-  font-style: normal;
-  font-size: .8em;
-  letter-spacing: .08em;
-  opacity: .82;
-}
-.venue {
-  font-size: clamp(.77rem, 2.25vw, 1.05rem);
-  margin-top: .42em;
-  line-height: 1.18;
-}
-.venue b { font-weight: 500; }
-.directions {
-  font-size: clamp(.78rem, 2.15vw, 1.08rem);
-  line-height: 1.12;
-  padding: .32em 1.2em .4em;
-  margin-top: .5em;
-}
-@media (hover: hover) {
-  .event-haldi .directions:hover { background: var(--ink); color: var(--haldi); }
-}
-
-/* The lower part of the SAME square card holds the whole image, not an overlay.
-   object-fit:contain avoids cutting off the clothing or backdrop. */
+/* Keep the original photo and live text in the SAME square. */
 .event .tile {
-  position: relative;
-  display: flex;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 0;
   min-width: 0;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
+  min-height: 0;
+  display: block;
   padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
+  overflow: hidden;
   box-shadow: none;
   transform: none;
 }
@@ -586,12 +515,79 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   display: block;
   width: 100%;
   height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: center center;
+  max-width: none;
+  object-fit: cover;
+  /* Crop out title banners at the top of the uploaded portraits. */
+  object-position: 50% 67%;
+  transform: scale(1.05);
+  transform-origin: 50% 67%;
 }
 .event-sangeeth .tile { box-shadow: none; }
-
+.event .event-copy {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0;
+  width: 100%;
+  max-width: none;
+  padding: clamp(38px, 12vw, 65px) clamp(12px, 3.5vw, 26px) clamp(12px, 3vw, 23px);
+  text-align: center;
+  color: #fff7ed;
+  background: linear-gradient(to bottom, transparent 0%, rgba(27, 14, 20, .85) 20%, rgba(27, 14, 20, .97) 60%, #1b0e14 100%);
+  pointer-events: none;
+}
+.event .event-copy a { pointer-events: auto; }
+.event h2 {
+  position: static;
+  overflow: visible;
+  width: auto;
+  height: auto;
+  clip-path: none;
+  white-space: normal;
+  font-family: var(--serif);
+  font-size: clamp(18px, 4.6vw, 28px);
+  font-variant-caps: small-caps;
+  font-weight: 500;
+  letter-spacing: .11em;
+  line-height: 1;
+  margin: 0 0 .28em;
+}
+.event-when {
+  font-size: clamp(.83rem, 2.5vw, 1.12rem);
+  line-height: 1.16;
+}
+.event-note { display: none; }
+.dress {
+  font-style: normal;
+  font-size: clamp(.77rem, 2.3vw, 1.04rem);
+  line-height: 1.18;
+  margin-top: .48em;
+}
+.dress .sc {
+  display: inline;
+  font-style: normal;
+  font-size: .85em;
+  font-weight: 600;
+  letter-spacing: .03em;
+  opacity: .85;
+}
+.dress .sc::after { content: " · "; }
+.venue {
+  font-size: clamp(.78rem, 2.3vw, 1.05rem);
+  line-height: 1.18;
+  margin-top: .5em;
+}
+.venue b { font-weight: 600; }
+.directions {
+  display: inline-block;
+  margin-top: .65em;
+  padding: .3em 1.25em .35em;
+  border-color: rgba(255, 245, 233, .8);
+  font-size: clamp(.8rem, 2.3vw, 1rem);
+  line-height: 1.1;
+}
+@media (hover: hover) {
+  .event .directions:hover { color: #21131c; background: var(--paper); }
+}
 .lights { position: absolute; left: 4%; right: 4%; top: 18px; height: 50px; pointer-events: none; }
 .lights i {
   position: absolute;
@@ -601,21 +597,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   box-shadow: 0 0 8px 2px rgba(244, 200, 99, .45);
 }
 .lights.is-lit i { animation: flare .55s ease-out; }
-@keyframes flare {
-  0% { box-shadow: 0 0 22px 9px rgba(244, 200, 99, .95); transform: scale(1.5); }
-}
+@keyframes flare { 0% { box-shadow: 0 0 22px 9px rgba(244, 200, 99, .95); transform: scale(1.5); } }
 .tile-drum.is-hit { animation: hit .24s ease-out; }
 @keyframes hit { 30% { transform: scale(.975); } }
-
 @media (max-width: 390px) {
-  .event .event-card { width: min(97vw, 660px); grid-template-rows: minmax(0, 1.07fr) minmax(0, .93fr); }
-  .event .event-copy { padding: 6px 7px; }
-  .event h2 { font-size: clamp(42px, 12vw, 54px); }
-  .event-when { font-size: .81rem; }
-  .dress, .venue { font-size: .74rem; }
-  .directions { font-size: .76rem; padding: .25em 1em; margin-top: .3em; }
+  .event .event-card { width: min(96vw, 480px); }
+  .event .event-copy { padding: 28px 9px 9px; }
+  .event h2 { font-size: 17px; margin-bottom: .16em; }
+  .event-when { font-size: .79rem; }
+  .dress, .venue { font-size: .73rem; margin-top: .35em; }
+  .directions { margin-top: .44em; font-size: .77rem; padding: .22em .9em; }
 }
-
 /* ---------- Us, so far: a running collage of prints ---------- */
 
 .reel { padding: 76px 0 90px; }

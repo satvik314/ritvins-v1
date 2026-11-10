@@ -829,47 +829,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
 }
 
-/* Separate soundtrack control: sound effects and the song have independent buttons. */
-.music-wrap {
-  position: fixed;
-  z-index: 42;
-  top: max(12px, env(safe-area-inset-top));
-  right: 62px;
-  color: var(--fg);
-  font-family: var(--serif);
-}
-.music-button {
-  min-height: 42px;
-  padding: 0 12px;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  background: rgba(28, 27, 26, .82);
-  color: #f5eadd;
-  font-size: .98rem;
-  cursor: pointer;
-}
-.music-button:focus-visible { outline: 2px solid #f9d884; outline-offset: 3px; }
-.music-panel {
-  position: absolute;
-  right: 0;
-  top: 50px;
-  width: min(300px, calc(100vw - 24px));
-  padding: 12px;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 12px;
-  background: #211919;
-  box-shadow: 0 12px 30px rgba(0,0,0,.38);
-  color: #f5eadd;
-  text-align: left;
-}
-.music-panel[hidden] { display: none; }
-.music-video { width: 100%; aspect-ratio: 16/9; background: #100e0e; }
-.music-video iframe { width: 100%; height: 100%; border: 0; }
-.music-panel p { margin: 8px 0 6px; font-size: .9rem; }
-.music-panel a { color: #f9d884; font-size: .9rem; }
 @media (max-width: 600px) {
   .film { --h: clamp(200px, 62vw, 260px); gap: 18px; padding: 28px 16px 38px; }
   .print { padding: 7px 7px 0; }
   .print figcaption { font-size: .92rem; }
-  .music-button { font-size: .88rem; padding: 0 9px; }
 }

@@ -23,6 +23,17 @@
     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9.5v5h3.6L13 19V5L7.6 9.5H4z" fill="currentColor"/><path class="sound-wave" d="M15.8 8.6a4.8 4.8 0 0 1 0 6.8M18.2 6.2a8.2 8.2 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   </button>
 
+  <div class="music-wrap" id="musicWrap">
+    <button class="music-button" id="musicToggle" type="button" aria-pressed="false" aria-controls="musicPanel">
+      <span aria-hidden="true">♫</span> <span id="musicLabel">Play our song</span>
+    </button>
+    <div class="music-panel" id="musicPanel" hidden>
+      <div id="musicVideo" class="music-video" aria-label="Wedding music video player"></div>
+      <p id="musicStatus" role="status">Tap play to enjoy our song.</p>
+      <a href="https://music.youtube.com/watch?v=5p_cIdoAVaM" target="_blank" rel="noopener noreferrer">Open in YouTube Music</a>
+    </div>
+  </div>
+
   <a class="rsvp-seal" id="rsvpSeal" href="#rsvp" aria-label="Go to the RSVP card">
     <svg viewBox="0 0 100 100" aria-hidden="true">
       <defs><path id="sealRing" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1-78 0"/></defs>
@@ -130,7 +141,7 @@
         <h2 class="script">Haldi</h2>
         <p class="sc event-when">Wednesday, December 16<br>11 am to 2 pm</p>
         <p class="event-note">Wear something you're happy to see turn yellow. Turmeric doesn't ask first.</p>
-        <p class="dress"><span class="sc">Dress code</span>Yellows and whites. Comfortable, washable, nothing precious.</p>
+        <p class="dress"><span class="sc">Dress code</span>Yellow only. Comfortable, washable, nothing precious.</p>
         <p class="venue">1615 Edgewood Dr<br>Palo Alto, CA 94303</p>
         <a class="pill pill-ghost directions" href="https://maps.app.goo.gl/g2Dv9KRFpnZQqWik6" data-apple="https://maps.apple/p/D0wI7qi_o3eawn" target="_blank" rel="noopener">Get directions</a>
       </div>

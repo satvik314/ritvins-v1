@@ -472,38 +472,37 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .countdown small { font-size: 1rem; font-style: italic; margin-top: -.1em; opacity: .85; }
 .countdown i { font-style: normal; opacity: .6; }
 
-/* ---------- Compact event postcard: cropped photo and blended details ---------- */
+/* ---------- Taller invitation cards: 60% photo, 40% readable details ---------- */
 .event {
   position: relative;
-  padding: clamp(54px, 8vw, 94px) 12px;
   min-height: 0;
+  padding: clamp(56px, 8vw, 94px) 12px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 .event .event-card {
   position: relative;
   isolation: isolate;
-  width: min(94vw, 530px);
+  width: min(92vw, 500px);
   aspect-ratio: 4 / 5;
-  --heading-height: 17%;
   overflow: hidden;
   border: clamp(5px, 1.3vw, 7px) solid var(--paper);
   border-radius: 4px;
-  background: #22181b;
+  background: #1b0e14;
   color: #fff5e8;
   box-shadow: 0 20px 35px -16px rgba(12, 5, 8, .65);
 }
-/* One taller event card: room for faces, heading, and details. */
+/* Keep the original photo at the TOP, with a gentler crop and no overlay on faces. */
 .event .tile {
   position: absolute;
-  inset: var(--heading-height) 0 0;
-  width: 100%;
-  height: calc(100% - var(--heading-height));
-  min-width: 0;
-  min-height: 0;
+  inset: 0 0 auto;
   display: block;
+  width: 100%;
+  height: 63%;
+  min-height: 0;
+  min-width: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -513,13 +512,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transform: none;
 }
 .event .tile img {
-  display: block;
   width: 100%;
   height: 100%;
   max-width: none;
+  display: block;
   object-fit: cover;
-  /* Crop out title banners at the top of the uploaded portraits. */
-  object-position: 50% 100%;
+  object-position: 50% 38%;
   transform: none;
 }
 .event-sangeeth .tile { box-shadow: none; }
@@ -529,93 +527,80 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   inset: auto 0 0;
   width: 100%;
   max-width: none;
-  padding: clamp(38px, 12vw, 65px) clamp(12px, 3.5vw, 26px) clamp(12px, 3vw, 23px);
+  min-height: 43%;
+  padding: clamp(30px, 7vw, 56px) clamp(10px, 3vw, 22px) clamp(11px, 2.9vw, 22px);
   text-align: center;
   color: #fff7ed;
-  background: linear-gradient(to bottom, transparent 0%, rgba(27, 14, 20, .85) 20%, rgba(27, 14, 20, .97) 60%, #1b0e14 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(27, 14, 20, .94) 14%, #1b0e14 35%, #1b0e14 100%);
   pointer-events: none;
 }
 .event .event-copy a { pointer-events: auto; }
-.event .event-card > h2 {
-  position: absolute;
-  z-index: 3;
-  inset: 0 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--heading-height);
-  width: 100%;
-  margin: 0;
-  padding: 4px 10px;
-  background: #22181b;
-  border-bottom: 1px solid rgba(255, 245, 233, .3);
-  font-family: var(--script);
-  font-size: clamp(50px, 12vw, 82px);
-  font-weight: 400;
+.event .event-copy h2 {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  margin: 0 0 .25em;
+  font-family: var(--serif);
+  font-variant-caps: small-caps;
+  font-size: clamp(19px, 4.5vw, 27px);
+  font-weight: 500;
+  letter-spacing: .1em;
   line-height: 1;
-  letter-spacing: 0;
-  text-align: center;
-  color: #fff5e7;
-  text-shadow: 0 1px 2px rgba(0,0,0,.32);
-  pointer-events: none;
 }
-
-.event-when {
-  font-size: clamp(.83rem, 2.5vw, 1.12rem);
-  line-height: 1.16;
-}
+.event-when { font-size: clamp(.86rem, 2.6vw, 1.16rem); line-height: 1.19; }
 .event-note { display: none; }
 .dress {
+  margin-top: .5em;
   font-style: normal;
-  font-size: clamp(.77rem, 2.3vw, 1.04rem);
-  line-height: 1.18;
-  margin-top: .48em;
+  font-size: clamp(.8rem, 2.4vw, 1.05rem);
+  line-height: 1.22;
 }
 .dress .sc {
   display: inline;
   font-style: normal;
-  font-size: .85em;
+  font-size: .84em;
   font-weight: 600;
-  letter-spacing: .03em;
-  opacity: .85;
+  letter-spacing: .04em;
+  opacity: .86;
 }
 .dress .sc::after { content: " · "; }
 .venue {
-  font-size: clamp(.78rem, 2.3vw, 1.05rem);
-  line-height: 1.18;
   margin-top: .5em;
+  font-size: clamp(.8rem, 2.4vw, 1.06rem);
+  line-height: 1.22;
 }
 .venue b { font-weight: 600; }
 .directions {
   display: inline-block;
-  margin-top: .65em;
+  margin-top: .6em;
   padding: .3em 1.25em .35em;
-  border-color: rgba(255, 245, 233, .8);
-  font-size: clamp(.8rem, 2.3vw, 1rem);
-  line-height: 1.1;
+  border-color: rgba(255,245,233,.8);
+  font-size: clamp(.81rem, 2.4vw, 1.03rem);
+  line-height: 1.14;
 }
 @media (hover: hover) {
   .event .directions:hover { color: #21131c; background: var(--paper); }
 }
 .lights { position: absolute; left: 4%; right: 4%; top: 18px; height: 50px; pointer-events: none; }
 .lights i {
-  position: absolute;
-  width: 6px; height: 6px; margin-left: -3px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 8px 2px rgba(244, 200, 99, .45);
+  position: absolute; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 8px 2px rgba(244,200,99,.45);
 }
 .lights.is-lit i { animation: flare .55s ease-out; }
-@keyframes flare { 0% { box-shadow: 0 0 22px 9px rgba(244, 200, 99, .95); transform: scale(1.5); } }
+@keyframes flare { 0% { box-shadow: 0 0 22px 9px rgba(244,200,99,.95); transform: scale(1.5); } }
 .tile-drum.is-hit { animation: hit .24s ease-out; }
 @keyframes hit { 30% { transform: scale(.975); } }
 @media (max-width: 390px) {
-  .event .event-card { width: min(96vw, 530px); }
-  .event .event-copy { padding: 28px 9px 9px; }
-  .event .event-card > h2 { font-size: 54px; padding: 0 8px; }
-  .event-when { font-size: .79rem; }
-  .dress, .venue { font-size: .73rem; margin-top: .35em; }
-  .directions { margin-top: .44em; font-size: .77rem; padding: .22em .9em; }
+  .event .event-card { width: 96vw; aspect-ratio: 4 / 5.35; }
+  .event .tile { height: 59%; }
+  .event .event-copy { min-height: 46%; padding: 32px 9px 10px; }
+  .event .event-copy h2 { font-size: 19px; }
+  .event-when { font-size: .82rem; }
+  .dress, .venue { font-size: .76rem; }
+  .directions { font-size: .78rem; padding: .25em 1em; }
 }
 /* ---------- Us, so far: a running collage of prints ---------- */
 

@@ -159,18 +159,7 @@
     toggle.setAttribute("aria-label", Sound.enabled ? "Sound on" : "Sound off");
     toggle.classList.toggle("is-off", !Sound.enabled);
   }
-  toggle.addEventListener("click", () => {
-    const music = window.WeddingMusic;
-    // If autoplay was blocked, the first speaker tap starts the song rather than muting it.
-    if (Sound.enabled && music && !music.isPlaying()) {
-      music.start();
-      paintToggle();
-      return;
-    }
-    Sound.toggle();
-    paintToggle();
-    if (music) music.setEnabled(Sound.enabled);
-  });
+  // The soundtrack controller owns the speaker click so it can respond to browser autoplay blocks.
   paintToggle();
 
   /* ---------- Hero: map, postcard, stamp, countdown ---------- */

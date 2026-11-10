@@ -570,7 +570,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .reel-head h2 { font-size: clamp(84px, 23vw, 140px); }
 
 .film {
-  --h: clamp(200px, 52vw, 340px);
+  --h: clamp(210px, 46vw, 325px);
   display: flex;
   align-items: flex-start;
   gap: clamp(18px, 4vw, 36px);
@@ -586,6 +586,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .print {
   flex: none;
+  min-width: 0;
   margin: var(--drop, 0) 0 0;
   padding: 9px 9px 0;
   background: var(--paper) url("/assets/grain.png");
@@ -599,16 +600,25 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .print:nth-child(5n + 4) { --tilt: 2.6deg; --drop: 26px; }
 .print:nth-child(5n + 5) { --tilt: -1.8deg; --drop: 6px; }
 .print-photo {
+  position: relative;
+  width: calc(var(--h) * var(--ratio));
   height: var(--h);
-  aspect-ratio: var(--ratio);
   overflow: hidden;
   background: #2a2320;
 }
-.print-photo img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.print-photo img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
 /* The caption wraps to the photo's width rather than stretching the print. */
 .print figcaption {
-  width: 0;
-  min-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
   padding: .5em 4px .75em;
   text-align: center;
   font-style: italic;
@@ -767,4 +777,49 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     transition-duration: .01ms !important;
     transition-delay: 0ms !important;
   }
+}
+
+/* Separate soundtrack control: sound effects and the song have independent buttons. */
+.music-wrap {
+  position: fixed;
+  z-index: 42;
+  top: max(12px, env(safe-area-inset-top));
+  right: 62px;
+  color: var(--fg);
+  font-family: var(--serif);
+}
+.music-button {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: rgba(28, 27, 26, .82);
+  color: #f5eadd;
+  font-size: .98rem;
+  cursor: pointer;
+}
+.music-button:focus-visible { outline: 2px solid #f9d884; outline-offset: 3px; }
+.music-panel {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: min(300px, calc(100vw - 24px));
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 12px;
+  background: #211919;
+  box-shadow: 0 12px 30px rgba(0,0,0,.38);
+  color: #f5eadd;
+  text-align: left;
+}
+.music-panel[hidden] { display: none; }
+.music-video { width: 100%; aspect-ratio: 16/9; background: #100e0e; }
+.music-video iframe { width: 100%; height: 100%; border: 0; }
+.music-panel p { margin: 8px 0 6px; font-size: .9rem; }
+.music-panel a { color: #f9d884; font-size: .9rem; }
+@media (max-width: 600px) {
+  .film { --h: clamp(200px, 62vw, 260px); gap: 18px; padding: 28px 16px 38px; }
+  .print { padding: 7px 7px 0; }
+  .print figcaption { font-size: .92rem; }
+  .music-button { font-size: .88rem; padding: 0 9px; }
 }

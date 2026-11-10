@@ -472,7 +472,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .countdown small { font-size: 1rem; font-style: italic; margin-top: -.1em; opacity: .85; }
 .countdown i { font-style: normal; opacity: .6; }
 
-/* ---------- Taller invitation cards: 60% photo, 40% readable details ---------- */
+/* ---------- Taller event cards with artwork-color blended details ---------- */
 .event {
   position: relative;
   min-height: 0;
@@ -486,12 +486,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   position: relative;
   isolation: isolate;
   width: min(92vw, 500px);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 6;
   overflow: hidden;
   border: clamp(5px, 1.3vw, 7px) solid var(--paper);
   border-radius: 4px;
-  background: #1b0e14;
-  color: #fff5e8;
+  background: var(--card-panel);
+  color: var(--card-ink);
   box-shadow: 0 20px 35px -16px rgba(12, 5, 8, .65);
 }
 /* Keep the original photo at the TOP, with a gentler crop and no overlay on faces. */
@@ -500,7 +500,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   inset: 0 0 auto;
   display: block;
   width: 100%;
-  height: 63%;
+  height: 62%;
   min-height: 0;
   min-width: 0;
   padding: 0;
@@ -530,10 +530,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   min-height: 43%;
   padding: clamp(30px, 7vw, 56px) clamp(10px, 3vw, 22px) clamp(11px, 2.9vw, 22px);
   text-align: center;
-  color: #fff7ed;
-  background: linear-gradient(to bottom, transparent 0%, rgba(27, 14, 20, .94) 14%, #1b0e14 35%, #1b0e14 100%);
+  color: var(--card-ink);
+  background: linear-gradient(to bottom, transparent 0%, var(--card-fade) 16%, var(--card-panel) 38%, var(--card-panel) 100%);
   pointer-events: none;
 }
+/* Theme each panel to match its illustration and event section. */
+.event-haldi { --card-panel: #e8b944; --card-fade: rgba(232, 185, 68, .91); --card-ink: #281a0b; }
+.event-sangeeth { --card-panel: #22234d; --card-fade: rgba(34, 35, 77, .92); --card-ink: #fff5e8; }
+.event-wedding { --card-panel: #811e2d; --card-fade: rgba(129, 30, 45, .93); --card-ink: #fff5e8; }
+.event-haldi .directions { border-color: rgba(40, 26, 11, .75); color: #281a0b; }
+.event-sangeeth .directions, .event-wedding .directions { border-color: rgba(255, 245, 233, .78); color: #fff5e8; }
 .event .event-copy a { pointer-events: auto; }
 .event .event-copy h2 {
   position: static;
@@ -594,9 +600,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .tile-drum.is-hit { animation: hit .24s ease-out; }
 @keyframes hit { 30% { transform: scale(.975); } }
 @media (max-width: 390px) {
-  .event .event-card { width: 96vw; aspect-ratio: 4 / 5.35; }
-  .event .tile { height: 59%; }
-  .event .event-copy { min-height: 46%; padding: 32px 9px 10px; }
+  .event .event-card { width: 96vw; aspect-ratio: 4 / 6.2; }
+  .event .tile { height: 60%; }
+  .event .event-copy { min-height: 43%; padding: 35px 9px 13px; }
   .event .event-copy h2 { font-size: 19px; }
   .event-when { font-size: .82rem; }
   .dress, .venue { font-size: .76rem; }

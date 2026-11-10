@@ -5,3 +5,4 @@ import "./js/sound.js";
 import "./js/petals.js";
 import "./js/rsvp.js";
 import "./js/app.js";
+import "./js/music.js";

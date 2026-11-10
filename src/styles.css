@@ -472,31 +472,52 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .countdown small { font-size: 1rem; font-style: italic; margin-top: -.1em; opacity: .85; }
 .countdown i { font-style: normal; opacity: .6; }
 
-/* ---------- Event details first, full portraits below ---------- */
+/* ---------- One square invitation per event: details above, portrait below ---------- */
 
 .event {
   position: relative;
-  padding: clamp(64px, 10vw, 108px) 18px;
   min-height: 0;
+  padding: clamp(56px, 10vw, 100px) 12px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
-  gap: clamp(26px, 5vw, 48px);
   text-align: center;
   overflow: hidden;
-  --edge: clamp(5px, 1.4vw, 8px);
 }
 
+/* Keep the details and portrait together as a single square artwork card.
+   On narrow screens, a contained square still preserves readable event facts. */
+.event .event-card {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 660px);
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1.03fr);
+  justify-items: stretch;
+  align-items: stretch;
+  overflow: hidden;
+  border: clamp(5px, 1.4vw, 8px) solid var(--paper);
+  border-radius: 3px;
+  background: var(--bg);
+  box-shadow: 0 18px 34px -14px rgba(20, 0, 3, .65);
+}
 .event .event-copy {
   position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(10px, 2.7vw, 26px) clamp(8px, 3vw, 32px);
+  overflow: hidden;
   z-index: 2;
-  width: min(100%, 550px);
-  max-width: 550px;
-  padding: 0 8px;
-  pointer-events: auto;
 }
-
 .event h2 {
   position: static;
   width: auto;
@@ -504,56 +525,72 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   overflow: visible;
   clip-path: none;
   white-space: normal;
-  font-size: clamp(74px, 17vw, 120px);
-  line-height: 1;
-  margin: 0 0 .18em;
+  font-size: clamp(43px, 12vw, 93px);
+  line-height: .93;
+  margin: 0 0 .11em;
 }
-
-.event-when { font-size: clamp(1.32rem, 3.2vw, 1.6rem); line-height: 1.35; }
-.event-note { display: block; margin-top: .65em; line-height: 1.4; opacity: .9; }
-.dress { margin-top: 1em; font-style: italic; line-height: 1.4; }
+.event-when {
+  font-size: clamp(.84rem, 2.6vw, 1.38rem);
+  line-height: 1.18;
+}
+.event-note { display: none; }
+.dress {
+  font-size: clamp(.77rem, 2.3vw, 1.05rem);
+  line-height: 1.18;
+  margin-top: .38em;
+  font-style: italic;
+}
 .dress .sc {
   display: block;
-  margin-bottom: .1em;
   font-style: normal;
-  font-size: .95rem;
+  font-size: .8em;
   letter-spacing: .08em;
-  opacity: .8;
+  opacity: .82;
 }
-.venue { margin-top: 1em; line-height: 1.45; }
+.venue {
+  font-size: clamp(.77rem, 2.25vw, 1.05rem);
+  margin-top: .42em;
+  line-height: 1.18;
+}
 .venue b { font-weight: 500; }
-.directions { margin-top: 1em; font-size: 1.1rem; }
+.directions {
+  font-size: clamp(.78rem, 2.15vw, 1.08rem);
+  line-height: 1.12;
+  padding: .32em 1.2em .4em;
+  margin-top: .5em;
+}
 @media (hover: hover) {
   .event-haldi .directions:hover { background: var(--ink); color: var(--haldi); }
 }
 
-/* Preserve each uploaded image's complete 2:3 portrait — never crop it. */
+/* The lower part of the SAME square card holds the whole image, not an overlay.
+   object-fit:contain avoids cutting off the clothing or backdrop. */
 .event .tile {
   position: relative;
-  z-index: 1;
-  display: block;
-  box-sizing: border-box;
-  flex: none;
-  width: min(100%, 620px);
-  height: auto;
-  padding: 0;
-  border: var(--edge) solid var(--paper);
-  border-radius: 3px;
-  background: transparent;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
   overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   transform: none;
-  box-shadow: 0 18px 34px -14px rgba(20, 0, 3, .5);
 }
 .event .tile img {
   display: block;
   width: 100%;
-  max-width: none;
-  height: auto;
-  aspect-ratio: 2 / 3;
+  height: 100%;
+  max-width: 100%;
   object-fit: contain;
-  object-position: center;
+  object-position: center center;
 }
-.event-sangeeth .tile { box-shadow: 0 18px 34px -14px rgba(0, 0, 0, .75); }
+.event-sangeeth .tile { box-shadow: none; }
 
 .lights { position: absolute; left: 4%; right: 4%; top: 18px; height: 50px; pointer-events: none; }
 .lights i {
@@ -567,13 +604,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @keyframes flare {
   0% { box-shadow: 0 0 22px 9px rgba(244, 200, 99, .95); transform: scale(1.5); }
 }
-
 .tile-drum.is-hit { animation: hit .24s ease-out; }
 @keyframes hit { 30% { transform: scale(.975); } }
 
-@media (min-width: 900px) {
-  .event { padding-top: 100px; padding-bottom: 115px; }
-  .event .event-copy { font-size: 1.1rem; }
+@media (max-width: 390px) {
+  .event .event-card { width: min(97vw, 660px); grid-template-rows: minmax(0, 1.07fr) minmax(0, .93fr); }
+  .event .event-copy { padding: 6px 7px; }
+  .event h2 { font-size: clamp(42px, 12vw, 54px); }
+  .event-when { font-size: .81rem; }
+  .dress, .venue { font-size: .74rem; }
+  .directions { font-size: .76rem; padding: .25em 1em; margin-top: .3em; }
 }
 
 /* ---------- Us, so far: a running collage of prints ---------- */

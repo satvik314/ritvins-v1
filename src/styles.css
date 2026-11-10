@@ -810,7 +810,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transform: rotate(1.2deg);
   box-shadow: 0 16px 28px -12px rgba(20, 0, 3, .65);
 }
-.foot .script { font-size: 60px; }
+.foot .footer-hashtag {
+  margin: 8px auto 0;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.15;
+  letter-spacing: .025em;
+  text-transform: none;
+  color: var(--fg);
+}
 
 /* ---------- Wider screens ---------- */
 

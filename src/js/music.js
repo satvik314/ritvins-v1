@@ -1,51 +1,53 @@
-// Optional locally hosted soundtrack. This site's authorized audio is served from public/assets/music.mp3.
-// The existing speaker icon controls the MP3 soundtrack; other audio is disabled.
-// Browsers prevent audible autoplay before a visitor's first interaction.
+// The uploaded MP3 is the only audio on the invitation.
+// Try autoplay on load. Browsers that block it will start on the first guest interaction.
 (function () {
-  const source = "/assets/music.mp3";
-  const audio = new Audio();
-  audio.src = source;
+  const audio = new Audio("/assets/music.mp3");
   audio.loop = true;
-  audio.preload = "none";
+  audio.preload = "auto";
   audio.volume = 0.55;
 
   let enabled = window.Sound ? window.Sound.enabled : true;
   let unavailable = false;
-  let unlocked = false;
 
-  audio.addEventListener("error", () => {
-    unavailable = true; // Do not attempt playback if the MP3 cannot load.
-  });
+  audio.addEventListener("error", () => { unavailable = true; });
 
-  function play() {
-    if (!enabled || unavailable || !unlocked) return;
-    const result = audio.play();
-    if (result && typeof result.catch === "function") result.catch(() => {});
+  function start() {
+    if (!enabled || unavailable || document.hidden) return;
+    // Reattempt in a user gesture if the browser rejected autoplay earlier.
+    const pending = audio.play();
+    if (pending && typeof pending.catch === "function") {
+      pending.catch(() => {});
+    }
   }
 
   function setEnabled(next) {
     enabled = Boolean(next);
-    if (!enabled) {
-      audio.pause();
-    } else {
-      // This is called directly from the speaker button click, a user gesture.
-      unlocked = true;
-      play();
-    }
+    if (enabled) start();
+    else audio.pause();
   }
 
-  // Opening or interacting with the invitation unlocks music on supporting browsers.
-  function unlock() {
-    if (unlocked) return;
-    unlocked = true;
-    play();
+  // Start immediately when the browser permits autoplay.
+  start();
+
+  // On other browsers, opening the invitation or touching anywhere starts the song.
+  // The speaker button handles its own click so it doesn't instantly toggle back off.
+  function onInteraction(event) {
+    if (event.target && event.target.closest && event.target.closest("#soundToggle")) return;
+    if (audio.paused) start();
   }
-  document.addEventListener("pointerdown", unlock, { passive: true });
-  document.addEventListener("keydown", unlock);
+  document.addEventListener("pointerdown", onInteraction, { passive: true });
+  document.addEventListener("touchend", onInteraction, { passive: true });
+  document.addEventListener("click", onInteraction);
+  document.addEventListener("keydown", onInteraction);
+
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) audio.pause();
-    else play();
+    else start();
   });
 
-  window.WeddingMusic = { setEnabled };
+  window.WeddingMusic = {
+    setEnabled,
+    start,
+    isPlaying: () => !audio.paused && !audio.ended
+  };
 })();

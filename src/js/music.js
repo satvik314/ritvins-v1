@@ -1,9 +1,8 @@
-// Optional locally hosted soundtrack. Upload an audio file you are licensed to use
-// to public/assets/audio/our-song.mp3 to enable background music.
+// Optional locally hosted soundtrack. This site's authorized audio is served from public/assets/music.mp3.
 // The existing speaker icon controls BOTH the soundtrack and page sound effects.
 // Browsers prevent audible autoplay before a visitor's first interaction.
 (function () {
-  const source = "/assets/audio/our-song.mp3";
+  const source = "/assets/music.mp3";
   const audio = new Audio();
   audio.src = source;
   audio.loop = true;
